@@ -1,0 +1,16 @@
+{
+    "name": "vik-torch/tasker-panel",
+    "type": "project",
+    "authors": [
+        {
+            "name": "vik-torch",
+            "email": "chaikinviktor2018@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {}
+}
