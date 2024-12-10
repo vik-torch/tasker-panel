@@ -13,22 +13,31 @@ class Router
 
     public function __construct()
     {
-        $routes = [
-            'GET' => [
-                '/' => [\App\Controllers\Controller::class, 'index'],
-            ],
-            'POST' => [
+        // $routes = [
+        //     'GET' => [
+        //         '/' => [\App\Controllers\Controller::class, 'index'],
+        //     ],
+        //     'POST' => [
                 
-            ]
-        ];
+        //     ]
+        // ];
 
-        foreach ($routes as $method => $uri) {
-            foreach ($uri as $uri => $controller_info) {
-                $this->addRoute($method, $uri, $controller_info[0], $controller_info[1]);
-            }
-        }
+        // foreach ($routes as $method => $uri) {
+        //     foreach ($uri as $uri => $controller_info) {
+        //         $this->addRoute($method, $uri, $controller_info[0], $controller_info[1]);
+        //     }
+        // }
     }
 
+    /**
+     * Добавление роута
+     * 
+     * @param string $method - http метод
+     * @param string $uri - url
+     * @param string $controller - имя контроллера (класса)
+     * @param string $action - имя экшена (метода) контроллера
+     * @return void
+     */
     public function addRoute(
         string $method,
         string $uri,

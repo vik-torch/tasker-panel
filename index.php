@@ -9,7 +9,8 @@ use Core\Route\Router;
 require_once __DIR__ . '/vendor/autoload.php';
 
 try {
-    $router = new Router();
+    require_once __DIR__ . '/app/routes.php';
+
     $url = $_SERVER['REQUEST_URI'];
     $method = $_SERVER['REQUEST_METHOD'];
     echo $router->resolve($url, $method);
