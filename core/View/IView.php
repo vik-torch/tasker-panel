@@ -4,5 +4,5 @@ namespace Core\View;
 
 interface IView
 {
-    public function render(string $view, $data = []): string|null;
+    public static function render(string $view, $data = []): string;
 }

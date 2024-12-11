@@ -6,19 +6,11 @@ class View implements IView
 {
     protected const VIEW_PATH = 'resources/views/';
 
-    public function render(string $view, $data = []): string|null
+    public static function render(string $view, $data = []): string
     {
         extract($data);
         ob_start();
-        static::includeView($view);
+        include static::VIEW_PATH . $view . '.php';;
         return ob_get_clean() ?? null;
-    }
-
-    private static function includeView($view)
-    {
-        $file_path = static::VIEW_PATH . $view . '.php';
-        if (file_exists($file_path)) {
-            include $file_path;
-        }
     }
 }
