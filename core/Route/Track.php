@@ -2,6 +2,8 @@
 
 namespace Core\Route;
 
+use Core\Exceptions\ServerException;
+
 class Track implements ITrack
 {
     public string $action;
@@ -16,6 +18,13 @@ class Track implements ITrack
     public function run(): string
     {
         $controller = new $this->controller();
-        return $controller->{$this->action}();
+        
+        if (!method_exists($controller, $this->action)) {
+            throw new ServerException();
+        }
+        
+        $action = $controller->{$this->action}();
+        
+        return $action;
     }
 }

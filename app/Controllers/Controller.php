@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
-class Controller
+use \Core\Controller\Controller as BaseController;
+
+class Controller extends BaseController
 {
-    public function index()
+    public function index(): string
     {
-        return "I`m Controller!!!";
+        return 'Hello World';
     }
 }
