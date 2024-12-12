@@ -2,25 +2,19 @@
 
 namespace Core\Database;
 
-class Repository implements IRepository
+use Core\Database\Connector;
+use PDO;
+
+abstract class Repository implements IRepository
 {
-    public function get($id)
-    {
-        return null;
-    }
+    /**
+     * DB Handler
+     * @var PDO
+     */
+    protected PDO $dbh;
 
-    public function getAll()
+    public function __construct()
     {
-        return null;
-    }
-
-    public function create($data)
-    {
-        return null;
-    }
-
-    public function delete($id)
-    {
-        return null;
+        $this->dbh = Connector::getInstance()->connection;
     }
 }
