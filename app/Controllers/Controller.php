@@ -6,8 +6,8 @@ use \Core\Controller\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    // public function index(): string
-    // {
-    //     return 'Hello World';
-    // }
+    public function index(): string
+    {
+        return 'Hello World';
+    }
 }

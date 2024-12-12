@@ -11,24 +11,6 @@ class Router
      */
     protected $routes = [];
 
-    public function __construct()
-    {
-        // $routes = [
-        //     'GET' => [
-        //         '/' => [\App\Controllers\Controller::class, 'index'],
-        //     ],
-        //     'POST' => [
-                
-        //     ]
-        // ];
-
-        // foreach ($routes as $method => $uri) {
-        //     foreach ($uri as $uri => $controller_info) {
-        //         $this->addRoute($method, $uri, $controller_info[0], $controller_info[1]);
-        //     }
-        // }
-    }
-
     /**
      * Добавление роута
      * 
