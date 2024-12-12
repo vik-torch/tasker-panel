@@ -23,8 +23,8 @@ class Track implements ITrack
             throw new ServerException();
         }
         
-        $action = $controller->{$this->action}();
+        $response = $controller->{$this->action}();
         
-        return $action;
+        return $response;
     }
 }
