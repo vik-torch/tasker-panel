@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use PDO;
 
-use Core\Database\Repository;
+use Core\Database\MySQL\Repository;
 
 class TestRepository extends Repository implements ITestRepository
 {

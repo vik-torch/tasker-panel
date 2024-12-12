@@ -1,8 +1,9 @@
 <?php
 
-namespace Core\Database;
+namespace Core\Database\MySQL;
 
 use Core\Database\Connector;
+use Core\Database\IRepository;
 use PDO;
 
 abstract class Repository implements IRepository
