@@ -24,12 +24,18 @@ class Connector
     
     private static function getConnection(): PDO
     {
+        $options =[
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+        
         $connection = new PDO(
             'mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'],
             $_ENV['DB_USER'],
-            $_ENV['DB_PASS']
+            $_ENV['DB_PASS'],
+            $options
         );
-        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $connection;
     }
