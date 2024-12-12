@@ -10,7 +10,7 @@ class View implements IView
     {
         extract($data);
         ob_start();
-        include static::VIEW_PATH . $view . '.php';;
+        include static::VIEW_PATH . $view . '.php';
         return ob_get_clean() ?? null;
     }
 }
