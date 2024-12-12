@@ -2,6 +2,7 @@
 
 use Core\Route\Router;
 use App\Controllers\Controller;
+use App\Controllers\HelloController;
 use App\Controllers\FirstController;
 
 /**
@@ -10,5 +11,5 @@ use App\Controllers\FirstController;
 
 $router = new Router();
 
-$router->addRoute('GET', '/', Controller::class, 'index');
-$router->addRoute('GET', '/first', FirstController::class, 'index');
+$router->addRoute('GET', '/', HelloController::class, 'index');
+$router->addRoute('GET', '/test', FirstController::class, 'index');
