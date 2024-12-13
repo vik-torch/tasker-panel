@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Core\Database\IRepository;
+use Core\Database\MySQL\IRepository;
 
 interface ITestRepository extends IRepository
 {

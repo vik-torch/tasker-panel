@@ -12,6 +12,10 @@ class StoreController extends BaseController
 
         $this->taskService->create($text, $user_name, $user_email);
         
-        return '{"status":"201","message":"Успешное сохранение!"}';
+        // return '{"status":"201","message":"Успешное сохранение!"}';
+        return json_encode([
+            'status' => '201',
+            'message' => 'Успешное сохранение!'
+        ]);
     }
 }
