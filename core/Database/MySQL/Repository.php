@@ -18,4 +18,19 @@ abstract class Repository implements IRepository
     {
         $this->dbh = Connector::getInstance()->connection;
     }
+    
+    public function beginTransaction()
+    {
+        $this->dbh->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->dbh->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->dbh->rollBack();
+    }
 }
