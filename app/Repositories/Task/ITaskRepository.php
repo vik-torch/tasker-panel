@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Task;
 
-use Core\Database\IRepository;
+use App\Models\ITaskModel;
+use Core\Database\MySQL\IRepository;
 
 interface ITaskRepository extends IRepository
 {
-    public function create($data);
+    public function create(ITaskModel $data);
     public function findByOffset(int $page_num);
 }

@@ -3,9 +3,14 @@
 namespace Core\Database\MySQL;
 
 use Core\Database\Connector;
-use Core\Database\IRepository;
+use Core\Database\MySQL\IRepository;
 use PDO;
 
+/**
+ * Summary of Repository
+ * 
+ * @method void beginTransaction()
+ */
 abstract class Repository implements IRepository
 {
     /**
@@ -19,11 +24,19 @@ abstract class Repository implements IRepository
         $this->dbh = Connector::getInstance()->connection;
     }
     
+    /**
+     * Начало транзакции
+     * @return void
+     */
     public function beginTransaction()
     {
         $this->dbh->beginTransaction();
     }
 
+    /**
+     * Окончание транзакции
+     * @return void
+     */
     public function commit()
     {
         $this->dbh->commit();

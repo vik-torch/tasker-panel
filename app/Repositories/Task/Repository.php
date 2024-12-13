@@ -2,18 +2,28 @@
 
 namespace App\Repositories\Task;
 
+use App\Models\ITaskModel;
 use Core\Database\MySQL\Repository as MySQLRepository;
 use Core\Exceptions\ServerException;
-use PDO;
 use Throwable;
 
 class Repository extends MySQLRepository implements ITaskRepository
 {
     private const LIMIT = 3;
 
-    public function create($data)
+    public function create(ITaskModel $taskData)
     {
-        // TODO: Implement create() method.
+        $sth = $this->dbh->prepare(
+            'INSERT INTO `tasks`
+                (`text`, `user_id`)
+                VALUES (:text, :user_id)'
+            );
+        $sth->execute([
+            ':text' => $taskData->getText(),
+            ':user_id' => $taskData->getUserId(),
+        ]);
+
+        return $this->dbh->lastInsertId();
     }
 
     public function findByOffset(int $page_num = 0)

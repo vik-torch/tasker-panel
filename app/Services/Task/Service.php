@@ -2,22 +2,44 @@
 
 namespace App\Services\Task;
 
-use App\Repositories\Task\Repository;
+use App\Models\ITaskModel;
+use App\Repositories\Task\Repository as TaskRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Models\Task as TaskModel;
+use App\Models\User;
+use App\Repositories\User\IUserRepository;
+use App\Repositories\User\Repository as UserRepository;
 
 class Service implements ITaskService
 {
-    private ITaskRepository $repository;
+    private ITaskRepository $taskRepository;
+    private IUserRepository $userRepository;
 
     public function __construct()
     {
-        $this->repository = new Repository();
+        $this->taskRepository = new TaskRepository();
+        $this->userRepository = new UserRepository();
     }
 
-    public function create($data)
+    public function create($text, $user_name, $user_email)
     {
-        // TODO: Implement create() method.
+        try {
+            $this->taskRepository->beginTransaction();
+
+            $user_model = new User($user_name, $user_email);
+            $user_id = $this->userRepository->findIdBy($user_email);
+            if (!$user_id) {
+                $user_id =$this->userRepository->create($user_model);
+            }
+            
+            $task_model = new TaskModel($text, $user_id);
+            $this->taskRepository->create($task_model);
+
+            $this->taskRepository->commit();
+        } catch (\Throwable $e) {
+            $this->taskRepository->rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -29,12 +51,13 @@ class Service implements ITaskService
     {
         $tasks = [];
 
-        $response = $this->repository->findByOffset($page_num);
+        $response = $this->taskRepository->findByOffset($page_num);
         foreach ($response as $raw_task) {
             $task = new TaskModel(
-                $raw_task['id'],
                 $raw_task['text'],
-                $raw_task['status']
+                $raw_task['status'],
+                $raw_task['user_id'],
+                $raw_task['id']
             );
             $tasks[] = $task;
         };
