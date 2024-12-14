@@ -27,23 +27,6 @@ class Repository extends MySQLRepository implements ITaskRepository
         return $this->dbh->lastInsertId();
     }
 
-    public function findByOffset(int $page_num = 0)
-    {
-        $offset = $page_num * self::LIMIT;
-
-        $response = static::tryExecute(function () use ($offset) {
-            $sth = $this->dbh->prepare(
-                'SELECT * FROM `tasks` LIMIT :limit OFFSET :offset'
-            );
-
-            $sth->execute(['limit' => self::LIMIT, 'offset' => $offset]);
-            $response = $sth->fetchAll();
-            return $response;
-        });
-
-        return $response;
-    }
-
     public function findAll(
         int $page_num = 1,
         ?string $sort_by = null,
@@ -78,6 +61,12 @@ class Repository extends MySQLRepository implements ITaskRepository
         });
 
         return $response;
+    }
+
+    public function getTotalTasksCount(): int
+    {
+        $stmt = $this->dbh->query('SELECT COUNT(*) FROM tasks');
+        return (int) $stmt->fetchColumn();
     }
 
     private static function tryExecute(callable $callback)

@@ -12,6 +12,6 @@ interface ITaskRepository extends IRepository
     public function findAll(
         int $page_num = 0,
         ?string $sort_by = null,
-        OrderEnum $order = OrderEnum::ASC
+        ?OrderEnum $order = null
     );
 }
