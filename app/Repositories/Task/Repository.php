@@ -66,10 +66,7 @@ class Repository extends MySQLRepository implements ITaskRepository
         ];
 
         if ($sort_by) {
-            str_replace('LIMIT', 'ORDER BY :sort_by :order LIMIT', $query);
-
-            $replace_params[':sort_by'] = $sort_by;
-            $replace_params[':order'] = $order->value;
+            $query =str_replace('LIMIT', 'ORDER BY ' . $sort_by . ' ' . $order->value . ' LIMIT', $query);
         }
 
         $response = static::tryExecute(function () use ($query, $replace_params) {
