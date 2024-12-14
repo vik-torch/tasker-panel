@@ -6,7 +6,7 @@ class GetController extends BaseController
 {
     public function index()
     {
-        $offset = (int)$_GET['offset'] ?? 0;
+        $offset = (int)$_GET['page'] ?? 0;
         $sort_by = $_GET['sort_by'] ?? null;
         $order = $_GET['order'] ?? null;
         
