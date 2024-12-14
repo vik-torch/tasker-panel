@@ -8,4 +8,5 @@ interface IUserService
 {
     public function create(array $data);
     public function find(int $id);
+    public function findOrCreate(IUserModel $user_model);
 }

@@ -38,4 +38,13 @@ class Repository extends MySQLRepository implements IUserRepository
 
         return $response === false ? $response : $response['id'];
     }
+
+    public function findBy(string $email)
+    {
+        $sth = $this->dbh->prepare('SELECT `id`,`name`,`email` FROM users WHERE email = :email');
+        $sth->execute(['email' => $email]);
+        $response = $sth->fetch();
+
+        return $response;
+    }
 }

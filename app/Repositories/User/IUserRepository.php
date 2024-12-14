@@ -11,4 +11,5 @@ interface IUserRepository extends IRepository
     public function create(IUserModel $user);
     public function find(int $id);
     public function findIdBy(string $email);
+    public function findBy(string $email);
 }

@@ -9,7 +9,9 @@ use App\Models\Task as TaskModel;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\User\Repository as UserRepository;
+use App\Services\User\IUserService;
 use Core\Database\MySQL\OrderValidate;
+use App\Services\User\Service as UserService;
 
 class Service implements ITaskService
 {
@@ -17,11 +19,13 @@ class Service implements ITaskService
 
     private ITaskRepository $taskRepository;
     private IUserRepository $userRepository;
+    private IUserService $userService;
 
     public function __construct()
     {
         $this->taskRepository = new TaskRepository();
         $this->userRepository = new UserRepository();
+        $this->userService = new UserService();
     }
 
     public function create($text, $user_name, $user_email)
@@ -30,10 +34,8 @@ class Service implements ITaskService
             $this->taskRepository->beginTransaction();
 
             $user_model = new User($user_name, $user_email);
-            $user_id = $this->userRepository->findIdBy($user_email);
-            if (!$user_id) {
-                $user_id =$this->userRepository->create($user_model);
-            }
+            
+            $user_id = $this->userService->findOrCreate($user_model);
             
             $task_model = new TaskModel($text, $user_id);
             $this->taskRepository->create($task_model);
