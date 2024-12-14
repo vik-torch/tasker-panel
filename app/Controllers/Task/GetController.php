@@ -14,7 +14,7 @@ class GetController extends BaseController
         $sort_by = $_GET['sort_by'] ?? null;
         $order = $_GET['order'] ?? null;
         
-        $tasks = $this->taskService->getByOffset($offset, $sort_by, $order);
+        $tasks = $this->taskService->getAll($offset, $sort_by, $order);
 
         // return $this->view::render('task', compact('tasks'));
         return json_encode($tasks);

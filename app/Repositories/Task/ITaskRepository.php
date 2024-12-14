@@ -3,10 +3,11 @@
 namespace App\Repositories\Task;
 
 use App\Models\ITaskModel;
+use App\Repositories\IPaginateRepository;
 use Core\Database\MySQL\IRepository;
 use Core\Database\MySQL\OrderEnum;
 
-interface ITaskRepository extends IRepository
+interface ITaskRepository extends IRepository, IPaginateRepository
 {
     public function create(ITaskModel $data);
     public function findAll(

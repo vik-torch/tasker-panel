@@ -63,9 +63,9 @@ class Repository extends MySQLRepository implements ITaskRepository
         return $response;
     }
 
-    public function getTotalTasksCount(): int
+    public function getTotalCount(): int
     {
-        $stmt = $this->dbh->query('SELECT COUNT(*) FROM tasks');
+        $stmt = $this->dbh->query('SELECT COUNT(*) FROM `tasks`');
         return (int) $stmt->fetchColumn();
     }
 

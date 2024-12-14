@@ -3,6 +3,7 @@
 namespace App\Services\Task;
 
 use App\DTO\TaskDTO;
+use App\DTO\TasksDTO;
 use App\Repositories\Task\Repository as TaskRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Models\Task as TaskModel;
@@ -34,7 +35,7 @@ class Service implements ITaskService
             $this->taskRepository->beginTransaction();
 
             $user_model = new User($user_name, $user_email);
-            
+
             $user_id = $this->userService->findOrCreate($user_model);
             
             $task_model = new TaskModel($text, $user_id);
@@ -48,12 +49,13 @@ class Service implements ITaskService
     }
 
     /**
-     * Summary of getByOffset
+     * Возвращает список задач
      * @param int $page_num - номер страницы
      * @return TaskDTO[]
      */
-    public function getByOffset(int $page_num, $sort_by = null, $order = null): array
+    public function getAll(int $page_num, $sort_by = null, $order = null): TasksDTO
     {
+        // TODO: продумать логику кеширования
         $tasks = [];
 
         $sort_by = match ($sort_by) {
@@ -77,6 +79,12 @@ class Service implements ITaskService
             $tasks[] = $task;
         };
 
-        return $tasks;
+        return new TasksDTO($tasks, $this->getTotalCount(), $page_num);
+    }
+
+    public function getTotalCount(): int
+    {
+        // TODO: продумать логику кеширования
+        return $this->taskRepository->getTotalCount();
     }
 }
