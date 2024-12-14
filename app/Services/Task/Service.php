@@ -2,17 +2,19 @@
 
 namespace App\Services\Task;
 
-use App\Models\ITaskModel;
+use App\DTO\TaskDTO;
 use App\Repositories\Task\Repository as TaskRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Models\Task as TaskModel;
-use App\Models\TaskStatus;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\User\Repository as UserRepository;
+use Core\Database\MySQL\OrderValidate;
 
 class Service implements ITaskService
 {
+    use OrderValidate;
+
     private ITaskRepository $taskRepository;
     private IUserRepository $userRepository;
 
@@ -46,19 +48,29 @@ class Service implements ITaskService
     /**
      * Summary of getByOffset
      * @param int $page_num - номер страницы >= 0
-     * @return TaskModel[]
+     * @return TaskDTO[]
      */
-    public function getByOffset(int $page_num)
+    public function getByOffset(int $page_num, $sort_by = null, $order = null): array
     {
         $tasks = [];
 
-        $response = $this->taskRepository->findByOffset($page_num);
+        $sort_by = match ($sort_by) {
+            'status' => 't.status',
+            'name' => 'u.name',
+            'email' => 'u.email',
+            default => null
+        };
+
+        static::validateOrder($order, $sort_by);
+
+        $response = $this->taskRepository->findAll($page_num, $sort_by, $order);
         foreach ($response as $raw_task) {
-            $task = new TaskModel(
+            $task = new TaskDTO(
+                $raw_task['id'],
                 $raw_task['text'],
-                $raw_task['user_id'],
-                TaskStatus::from($raw_task['status']),
-                $raw_task['id']
+                $raw_task['status'],
+                $raw_task['name'],
+                $raw_task['email']
             );
             $tasks[] = $task;
         };
