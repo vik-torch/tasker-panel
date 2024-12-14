@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-enum TaskStatus
+enum TaskStatus: string
 {
-    case NEW;
-    case DONE;
+    case NEW = "NEW";
+    case DONE = "DONE";
 }

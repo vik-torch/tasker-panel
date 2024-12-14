@@ -37,7 +37,7 @@ class Task implements ITaskModel
         return $this->text;
     }
     
-    public function getStatus(): TaskStatus
+    public function getStatus(): string
     {
         return $this->status->value;
     }

@@ -6,6 +6,7 @@ use App\Models\ITaskModel;
 use App\Repositories\Task\Repository as TaskRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Models\Task as TaskModel;
+use App\Models\TaskStatus;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\User\Repository as UserRepository;
@@ -55,8 +56,8 @@ class Service implements ITaskService
         foreach ($response as $raw_task) {
             $task = new TaskModel(
                 $raw_task['text'],
-                $raw_task['status'],
                 $raw_task['user_id'],
+                TaskStatus::from($raw_task['status']),
                 $raw_task['id']
             );
             $tasks[] = $task;
