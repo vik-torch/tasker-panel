@@ -47,7 +47,7 @@ class Service implements ITaskService
 
     /**
      * Summary of getByOffset
-     * @param int $page_num - номер страницы >= 0
+     * @param int $page_num - номер страницы
      * @return TaskDTO[]
      */
     public function getByOffset(int $page_num, $sort_by = null, $order = null): array

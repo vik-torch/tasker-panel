@@ -45,11 +45,11 @@ class Repository extends MySQLRepository implements ITaskRepository
     }
 
     public function findAll(
-        int $page_num = 0,
+        int $page_num = 1,
         ?string $sort_by = null,
         ?OrderEnum $order = null
     ) {
-        $offset = $page_num * self::LIMIT;
+        $offset = ($page_num - 1) * self::LIMIT;
         $query = 'SELECT 
                 t.id,
                 t.text,
