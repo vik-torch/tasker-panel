@@ -3,6 +3,7 @@
 namespace App\Repositories\Task;
 
 use App\Models\ITaskModel;
+use App\Models\TaskStatus;
 use Core\Database\MySQL\Repository as MySQLRepository;
 use Core\Exceptions\ServerException;
 use Throwable;
@@ -10,7 +11,7 @@ use Core\Database\MySQL\OrderEnum;
 
 class Repository extends MySQLRepository implements ITaskRepository
 {
-    private const LIMIT = 3;
+    public const LIMIT = 3;
 
     public function create(ITaskModel $taskData)
     {
@@ -56,10 +57,37 @@ class Repository extends MySQLRepository implements ITaskRepository
             $sth = $this->dbh->prepare($query);
 
             $sth->execute($replace_params);
-            $response = $sth->fetchAll();
-            return $response;
+            return $sth->fetchAll();
         });
 
+        return $response;
+    }
+
+    public function update(int $id, string $text, ?TaskStatus $status) {
+        $query = 'UPDATE `tasks` SET %params% WHERE `id` = :id';
+
+        // TODO: будем считать, что такая запись есть
+
+        $replace_params = [
+            ':id' => $id,
+        ];
+        $matches = [];
+        switch (true) {
+            case ($text !== null):
+                $matches[] = '`text` = :text';
+                $replace_params[':text'] = $text;
+            case ($status !== null):
+                $matches[] = '`status` = :status';
+                $replace_params[':status'] = $status->value;
+        }
+        $update_params_str = implode(', ', $matches);
+        $query = str_replace('%params%', $update_params_str, $query);
+        
+        $response = static::tryExecute(function () use ($query, $replace_params) {
+            $sth = $this->dbh->prepare($query);
+            return $sth->execute($replace_params);
+        });
+        
         return $response;
     }
 

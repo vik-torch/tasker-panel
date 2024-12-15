@@ -7,12 +7,14 @@ use App\DTO\TasksDTO;
 use App\Repositories\Task\Repository as TaskRepository;
 use App\Repositories\Task\ITaskRepository;
 use App\Models\Task as TaskModel;
+use App\Models\TaskStatus;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\User\Repository as UserRepository;
 use App\Services\User\IUserService;
 use Core\Database\MySQL\OrderValidate;
 use App\Services\User\Service as UserService;
+use Core\Exceptions\ClientException;
 
 class Service implements ITaskService
 {
@@ -79,12 +81,30 @@ class Service implements ITaskService
             $tasks[] = $task;
         };
 
-        return new TasksDTO($tasks, $this->getTotalCount(), $page_num);
+        return new TasksDTO($tasks, $this->getTotalPages(), $page_num);
+    }
+
+    public function update($raw_id, $text, $status)
+    {
+        $id = (int)$raw_id;
+        if ($id != $raw_id) {
+            throw new ClientException();
+        }
+        
+        $text = TaskModel::validateText($text);
+        $status = TaskStatus::from($status);
+
+        $this->taskRepository->update($id, $text, $status);
     }
 
     public function getTotalCount(): int
     {
         // TODO: продумать логику кеширования
         return $this->taskRepository->getTotalCount();
+    }
+
+    public function getTotalPages(): int
+    {
+        return ceil($this->getTotalCount() / TaskRepository::LIMIT);
     }
 }

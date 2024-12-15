@@ -10,6 +10,7 @@ use App\Controllers\FirstController;
 use App\Controllers\TestController;
 use App\Controllers\Task\GetController;
 use App\Controllers\Task\StoreController;
+use App\Controllers\Task\UpdateController;
 
 /**
  * Файл с добавлением роутов
@@ -27,8 +28,10 @@ $router->addRoute('GET', '/test/first', TestController::class, 'findFirst');
 ////////
 // Task
 ////////
-$router->addRoute('GET', '/task', GetController::class, 'index');
-$router->addRoute('POST', '/task/store', StoreController::class, 'index');
+$router->addRoute('GET', '/tasks', GetController::class, 'index');
+$router->addRoute('POST', '/tasks', GetController::class, 'getCollect');
+$router->addRoute('POST', '/tasks/store', StoreController::class, 'index');
+$router->addRoute('POST', '/tasks/update', UpdateController::class, 'index');
 
 // Auth
 $router->addRoute('POST', '/registration', RegistrationController::class, 'index');

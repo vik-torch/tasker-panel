@@ -13,6 +13,6 @@ class LoginController extends BaseController
             return json_encode(['status' => '301', 'message' => 'Вы уже авторизованы! Ща как буудет редирект!!!']);
         }
 
-        return $this->view::render('auth.login');
+        return $this->view::render('auth/login');
     }
 }
