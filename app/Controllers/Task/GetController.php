@@ -2,12 +2,14 @@
 
 namespace App\Controllers\Task;
 
-use Core\Exceptions\ClientException;
+use App\Middleware\Auth\Authentification;
 
 class GetController extends BaseController
 {
     public function index()
     {
+        $is_auth = Authentification::check_session();
+        
         $offset = (int)$_GET['page'] ?? 1;
         $offset = $offset < 1 ? 1 : $offset;
         

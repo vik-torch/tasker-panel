@@ -2,35 +2,36 @@
 
 namespace App\Controllers\Auth;
 
+use App\Middleware\Auth\Authentification;
 use App\Models\Auth\UserModel as User;
-use App\Services\Auth\AuthService;
-use App\Services\Auth\IAuthService;
-use Core\Controller\Controller;
-use Core\Exceptions\ClientException;
+use Core\Exceptions\Exception401;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
-    protected IAuthService $service;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->service = new AuthService();
-    }
-
     public function index()
     {
+        if (Authentification::check_session()) {
+            header('Location: /task');
+            exit;
+        }
+        
         $login = trim($_POST['login']) ?? null;
         $password = trim($_POST['password']) ?? null;
 
         if (!$login && !$password) {
-            throw new ClientException('Пользователь с такими даннными не найден', 404);
+            throw new Exception401();
         }
         $user_model = new User($login, $password);
-        $user = $this->service->find($user_model);
+        $user = $this->authService->find($user_model);
 
-        if ($user) {
-            $_SESSION['is_auth'] = $user['id'];
+        $is_password_valid = password_verify($password, $user['password']);
+        if (!$is_password_valid) {
+            throw new Exception401();
+        }
+
+        if ($user && isset($user['id'])) {
+            $this->authService->auth($user);
+            // TODO: Добавить редирект
             // return $this->view::render('auth.login');
             return json_encode(['status' => '200', 'message' => 'Успешная авторизация!']);
         }
