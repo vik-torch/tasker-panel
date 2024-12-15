@@ -1,5 +1,9 @@
 <?php
 
+use App\Controllers\Auth\AuthController;
+use App\Controllers\Auth\LoginController;
+use App\Controllers\Auth\LogoutController;
+use App\Controllers\Auth\RegistrationController;
 use Core\Route\Router;
 use App\Controllers\HelloController;
 use App\Controllers\FirstController;
@@ -19,8 +23,15 @@ $router->addRoute('GET', '/first', FirstController::class, 'index');
 $router->addRoute('GET', '/test', TestController::class, 'index');
 $router->addRoute('GET', '/test/first', TestController::class, 'findFirst');
 
+//////////////////////////////////////////////
 ////////
 // Task
 ////////
 $router->addRoute('GET', '/task', GetController::class, 'index');
 $router->addRoute('POST', '/task/store', StoreController::class, 'index');
+
+// Auth
+$router->addRoute('POST', '/registration', RegistrationController::class, 'index');
+$router->addRoute('GET', '/login', LoginController::class, 'index');
+$router->addRoute('GET', '/logout', LogoutController::class, 'index');
+$router->addRoute('POST', '/login/auth', AuthController::class, 'index');
