@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\Middleware\Auth\Authentification;
+use App\Middleware\Auth\Authorisation;
 use App\Middleware\Auth\SessionDTO;
 use App\Models\Auth\UserModel;
 use App\Repositories\Auth\IAuthRepository;
@@ -43,7 +43,7 @@ class AuthService implements IAuthService
     {
         if ($data && isset($data['id'])) {
             $session_dto = new SessionDTO($data['id']);
-            Authentification::set_session($session_dto);
+            Authorisation::set_session($session_dto);
         } else {
             throw new ServerException('Ошибка авторизации');
         }

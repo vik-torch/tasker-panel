@@ -2,7 +2,7 @@
 
 namespace App\Middleware\Auth;
 
-class Authentification
+class Authorisation
 {
     private static $algoritm = 'sha256';
     

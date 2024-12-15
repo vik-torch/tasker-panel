@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Auth;
 
-use App\Middleware\Auth\Authentification;
+use App\Middleware\Auth\Authorisation;
 
 class LogoutController extends BaseController
 {    
@@ -12,7 +12,7 @@ class LogoutController extends BaseController
     }
     public function index()
     {
-        Authentification::end_session();
+        Authorisation::end_session();
         return $this->view::render('auth.login');
     }
 }

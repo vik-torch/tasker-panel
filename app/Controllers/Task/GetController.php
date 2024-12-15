@@ -2,13 +2,13 @@
 
 namespace App\Controllers\Task;
 
-use App\Middleware\Auth\Authentification;
+use App\Middleware\Auth\Authorisation;
 
 class GetController extends BaseController
 {
     public function index()
     {
-        $is_auth = Authentification::check_session();
+        $is_auth = Authorisation::check_session();
         
         $offset = (int)$_GET['page'] ?? 1;
         $offset = $offset < 1 ? 1 : $offset;

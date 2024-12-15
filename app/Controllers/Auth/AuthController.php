@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Auth;
 
-use App\Middleware\Auth\Authentification;
+use App\Middleware\Auth\Authorisation;
 use App\Models\Auth\UserModel as User;
 use Core\Exceptions\Exception401;
 
@@ -10,7 +10,7 @@ class AuthController extends BaseController
 {
     public function index()
     {
-        if (Authentification::check_session()) {
+        if (Authorisation::check_session()) {
             header('Location: /task');
             exit;
         }
