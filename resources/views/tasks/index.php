@@ -35,7 +35,7 @@ use Core\View\View;
             </div>
             <!-- Sort End -->
 
-            <div id="tasks_list" class="comments_list__wr my-5"></div>
+            <div id="tasks_list" class="tasks_list__wr my-5"></div>
             <h3 class="empty_list_msg d-none my-5">Комментариев пока что нет, будьте первым!</h3>
 
             <!-- Pagination -->
@@ -48,7 +48,7 @@ use Core\View\View;
 
             
             <!-- Task_create form -->
-            <div class="comments_form__wr my-4">
+            <div class="task_form__wr my-4">
                 <h3 class="mb-4">Создать задачу</h3>
                 <form id="task_form">
                     <div class="form-group">
@@ -82,22 +82,26 @@ use Core\View\View;
 
                         <div class="ml-auto">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input status" id="task_status" data-val="" disabled>
-                                <label class="form-check-label" for="exampleCheck1">Статус задачи</label>
+                                <input type="checkbox" class="form-check-input status" id="task_status" disabled>
+                                <label class="form-check-label" for="task_status">Статус задачи</label>
                             </div>
-                            <a class="task-change d-none" href="javascript:void(0);">
-                                <i class="bi bi-pencil"></i>
-                            </a>
+                            <div class="d-flex">
+                                <a class="task-change change_btn d-none" href="javascript:void(0);">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <label class="is-edit form-check-label d-none" for="task_status">(ред.)</label>
+                            </div>
                         </div>
                         
                     </div>
                     <div class="card-body">
                         <div class="mb-0">
                             <p class="text">Текст</p>
+                            <input type="text" class="form-control text_moderate d-none">
                         </div>
                     </div>
                     <div class="card-footer d-none">
-                        <a class="ml-auto" href="javascript:void(0);">Сохранить</a>
+                        <a class="save_moderate_btn ml-auto" href="javascript:void(0);">Сохранить</a>
                     </div>
                 </div>
             </div>
